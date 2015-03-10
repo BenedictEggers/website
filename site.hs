@@ -15,7 +15,7 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-    match (fromList ["about.rst", "contact.markdown"]) $ do
+    match (fromList ["about.rst", "contact.markdown", "projects.markdown"]) $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
@@ -26,6 +26,13 @@ main = hakyll $ do
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
+    match "projects/*" $ do
+        route $ setExtension "html"
+        compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/project.html" projectCtx
+            >>= loadAndApplyTemplate "templates/default.html" projectCtx
             >>= relativizeUrls
 
     create ["archive.html"] $ do
@@ -47,9 +54,11 @@ main = hakyll $ do
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
+            projects <- recentFirst =<< loadAll "projects/*"
             let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Home"                `mappend`
+                    listField "posts" postCtx (return posts)          `mappend`
+                    listField "projects" projectCtx (return projects) `mappend`
+                    constField "title" "Home"                         `mappend`
                     defaultContext
 
             getResourceBody
@@ -60,8 +69,12 @@ main = hakyll $ do
     match "templates/*" $ compile templateCompiler
 
 
---------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
+    dateField "date" "%B %e, %Y" `mappend`
+    defaultContext
+
+projectCtx :: Context String
+projectCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultContext
