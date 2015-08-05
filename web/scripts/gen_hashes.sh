@@ -64,18 +64,21 @@
 
 if [[ $# -ne 2 ]]; then
         echo "Usage: ./gen_hashes.sh <source> <dest>"
+        exit 1
 fi
 
+rm -rf $2
 mkdir -p $2
 
 for THING in $( ls $1 ); do
         if [[ -d $1/$THING ]]; then
                 # directory
-                ./$0 $1/$THING $2/$THING
+                $0 $1/$THING $2/$THING
 
         elif [[ -f $1/$THING ]]; then
                 # file
-                md5sum $1/$THING > $2/$THING.hash
+                md5=($(md5sum $1/$THING))
+                echo $md5 > $2/$THING.hash
         else
                 # ????
                 echo "Error processing ${THING}, quitting"
