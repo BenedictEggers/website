@@ -3,5 +3,3 @@ _site/
 site
 *.o
 *.hi
-
-dist/*
