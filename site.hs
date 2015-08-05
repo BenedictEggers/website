@@ -52,7 +52,7 @@ main = hakyll $ do
             posts <- loadAll "typewriter/*"
             postTpl <- loadBody "templates/typewriter-item.html"
 
-            posts' <- applyTemplateList postTpl defaultContext posts
+            posts' <- applyTemplateList postTpl postCtx posts
 
             let typewriterCtx =
                     constField "title" "Typewriter Odyssey" `mappend`
