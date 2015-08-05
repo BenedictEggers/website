@@ -15,24 +15,6 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-{-          FUTURE BEN: These are for when you want to expose yourself to the internet.
-
-    match "posts/*" $ do
-        route $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
-            >>= relativizeUrls
-
-
-    match "projects/*" $ do
-        route $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/project.html" projectCtx
-            >>= loadAndApplyTemplate "templates/default.html" projectCtx
-            >>= relativizeUrls
--}
-
     match "typewriter/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
