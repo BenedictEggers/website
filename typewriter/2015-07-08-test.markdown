@@ -1,6 +1,0 @@
--------
-title: Test Post
-author: Butts
--------
-
-Nothing else needed.
