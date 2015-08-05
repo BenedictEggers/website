@@ -15,11 +15,7 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-    match (fromList ["about.rst", "contact.markdown", "projects.markdown"]) $ do
-        route   $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
+{-          FUTURE BEN: These are for when you want to expose yourself to the internet.
 
     match "posts/*" $ do
         route $ setExtension "html"
@@ -28,42 +24,44 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
+
     match "projects/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/project.html" projectCtx
             >>= loadAndApplyTemplate "templates/default.html" projectCtx
             >>= relativizeUrls
+-}
 
-    create ["archive.html"] $ do
+    match "typewriter/*" $ do
+        route $ setExtension "html"
+        compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/post.html" postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
+    match "*.markdown" $ do
+        route   $ setExtension "html"
+        compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= relativizeUrls
+
+    create ["typewriter.html"] $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let archiveCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Archives"            `mappend`
+            posts <- loadAll "typewriter/*"
+            postTpl <- loadBody "templates/typewriter-item.html"
+
+            posts' <- applyTemplateList postTpl defaultContext posts
+
+            let typewriterCtx =
+                    constField "title" "Typewriter Odyssey" `mappend`
+                    constField "typewriter-posts" posts'    `mappend`
                     defaultContext
 
             makeItem ""
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls
-
-
-    match "index.html" $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            projects <- recentFirst =<< loadAll "projects/*"
-            let indexCtx =
-                    listField "posts" postCtx (return posts)          `mappend`
-                    listField "projects" projectCtx (return projects) `mappend`
-                    constField "title" "Home"                         `mappend`
-                    defaultContext
-
-            getResourceBody
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                >>= loadAndApplyTemplate "templates/typewriter.html" typewriterCtx
+                >>= loadAndApplyTemplate "templates/default.html" typewriterCtx
                 >>= relativizeUrls
 
     match "templates/*" $ compile templateCompiler
