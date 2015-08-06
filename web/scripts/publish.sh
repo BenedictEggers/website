@@ -24,20 +24,26 @@ diff -r ${SITE_DIR} ${MOUNT_DIR} | while read LINE; do
         if [[ $LINE == diff* ]]; then
                 # Two files differ--copy the _site/ one to ${MOUNT_DIR}
                 WORDS=($LINE)
+                echo Copying ${WORDS[2]} to ${WORDS[3]}
                 cp ${WORDS[2]} ${WORDS[3]}
 
         elif [[ $LINE == Only* ]]; then
                 # We need to either add a file to the server, or delete one from it
                 WORDS=($LINE)
+                TRUNC=${WORDS[2]:0:-1}
 
                 if [[ ${WORDS[2]} == $SITE_DIR* ]]; then
                         # Need to add the file to the server
-                        TRUNC=${WORDS[2]:0:-1}
-                        cp ${TRUNC}/${WORDS[3]} ${MOUNT_DIR}/${TRUNC#*/}/${WORDS[3]}
+                        SOURCE=${TRUNC}/${WORDS[3]}
+                        DEST=${MOUNT_DIR}/${TRUNC#*/}/${WORDS[3]}
+                        echo Copying $SOURCE to $DEST
+                        cp $SOURCE $DEST
 
                 elif [[ ${WORDS[2]} == $MOUNT_DIR* ]]; then
                         # Need to delete the file from the server
-                        rm ${WORDS[2]:0:-1}/${WORDS[3]}
+                        TARGET=${TRUNC}/${WORDS[3]}
+                        echo Removing $TARGET
+                        rm $TARGET
 
                 else
                         echo "Something is horrible broken with $LINE"
