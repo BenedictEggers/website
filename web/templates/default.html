@@ -6,19 +6,26 @@
         <link rel="stylesheet" type="text/css" href="/css/default.css" />
     </head>
     <body>
-        <div id="header">
-            <div id="logo">
-                <a>Ben Eggers</a>
+        <div id="wrapper">
+            <div id="header">
+                <div id="logo">
+                    <a>Ben Eggers</a>
+                </div>
+                <div id="navigation">
+                    <a href="/">Home</a>
+                    <a href="/connect.html">Connect</a>
+                    <a href="typewriter.html">Typewriter</a>
+                </div>
             </div>
-            <div id="navigation">
-                <a href="/">Home</a>
-                <a href="/about.html">About</a>
-                <a href="typewriter.html">Typewriter</a>
+            <div id="content">
+                <h1>$title$</h1>
+                $body$
             </div>
-        </div>
-        <div id="content">
-            <h1>$title$</h1>
-            $body$
+            <div id="footer">
+                <div class="box">
+                    This site was built using <a href="http://jaspervdj.be/hakyll/">Hakyll</a>, an awesome static site generator for Haskell.
+                </div>
+            </div>
         </div>
     </body>
 </html>
