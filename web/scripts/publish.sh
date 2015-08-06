@@ -37,7 +37,7 @@ diff -r ${SITE_DIR} ${MOUNT_DIR} | while read LINE; do
                         SOURCE=${SRC}${WORDS[3]}
                         DEST=${MOUNT_DIR}/${SRC#*/}${WORDS[3]}
                         echo Copying $SOURCE to $DEST
-                        cp $SOURCE $DEST
+                        cp -r $SOURCE $DEST
 
                 elif [[ ${WORDS[2]} == $MOUNT_DIR* ]]; then
                         # Need to delete the file from the server
