@@ -14,26 +14,33 @@
         <link rel="stylesheet" href="css/skeleton.css">
 
     </head>
+
     <body>
-        <div class="container">
-            <div id="header">
-                <div id="logo">
-                    <a>Ben Eggers</a>
+
+        <div class="container" id="wrapper">
+
+            <div class="row" id="header">
+                <div class="two columns" id="Name">
+                    <h1 class="title">B.E.</h1>
                 </div>
-                <div id="navigation">
+                <div class="two columns" class="row" id="navigation">
                     <a href="/">Home</a>
                     <a href="/connect.html">Connect</a>
                 </div>
             </div>
-            <div id="content">
-                <h1>$title$</h1>
+
+            <div class="content-box" id="content">
+                <h2>$title$</h2>
                 $body$
             </div>
+
             <div id="footer">
-                <div class="box">
+                <div class="footer">
                         Built with <a href="http://jaspervdj.be/hakyll/">Hakyll</a>, <a href="http://getskeleton.com/">Skeleton</a>, and &hearts;
                 </div>
             </div>
+
         </div>
+
     </body>
 </html>
