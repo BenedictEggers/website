@@ -30,18 +30,18 @@ diff -r ${SITE_DIR} ${MOUNT_DIR} | while read LINE; do
         elif [[ $LINE == Only* ]]; then
                 # We need to either add a file to the server, or delete one from it
                 WORDS=($LINE)
-                TRUNC=${WORDS[2]:0:-1}
+                SRC=${WORDS[2]:0:-1}/
 
                 if [[ ${WORDS[2]} == $SITE_DIR* ]]; then
                         # Need to add the file to the server
-                        SOURCE=${TRUNC}/${WORDS[3]}
-                        DEST=${MOUNT_DIR}/${TRUNC#*/}/${WORDS[3]}
+                        SOURCE=${SRC}${WORDS[3]}
+                        DEST=${MOUNT_DIR}/${SRC#*/}${WORDS[3]}
                         echo Copying $SOURCE to $DEST
                         cp $SOURCE $DEST
 
                 elif [[ ${WORDS[2]} == $MOUNT_DIR* ]]; then
                         # Need to delete the file from the server
-                        TARGET=${TRUNC}/${WORDS[3]}
+                        TARGET=${SRC}${WORDS[3]}
                         echo Removing $TARGET
                         rm $TARGET
 
