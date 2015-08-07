@@ -43,7 +43,7 @@ diff -r ${SITE_DIR} ${MOUNT_DIR} | while read LINE; do
                         # Need to delete the file from the server
                         TARGET=${SRC}${WORDS[3]}
                         echo Removing $TARGET
-                        rm $TARGET
+                        rm -r $TARGET
 
                 else
                         echo "Something is horrible broken with $LINE"
