@@ -13,7 +13,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusFound)
 		return
 	}
-	fmt.Fprintln(w, "Website under contstruction")
+	fmt.Fprintln(w, "Website under construction")
 }
 
 func main() {
