@@ -1,0 +1,3 @@
+dispatch:
+  - url: "photography.beneggers.com/*"
+    module: photography
